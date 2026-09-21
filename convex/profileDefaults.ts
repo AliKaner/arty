@@ -11,7 +11,7 @@ export const profileDefaults = {
   email: "",
   phone: "",
   links: [] as { label: string; url: string }[],
-  backgroundColor: "#f6f4ee",
-  accentColor: "#cb643e",
+  backgroundColor: "#1b2340",
+  accentColor: "#d4a459",
   textColor: "",
 };

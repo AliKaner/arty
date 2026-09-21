@@ -553,6 +553,7 @@ export function ProfileEditor({ profile, onSave, onClose }) {
         </div>
         <div className="color-presets">
           {[
+            ["Lacivert", "#1b2340", "#d4a459"],
             ["Kâğıt", "#f6f4ee", "#cb643e"],
             ["Gece", "#252a2d", "#eab181"],
             ["Lavanta", "#efedf6", "#80639e"],

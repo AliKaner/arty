@@ -1,13 +1,13 @@
 :root {
   font-family: "DM Sans", sans-serif;
-  color: #302f2b;
-  background: #f6f4ee;
+  color: #f5f3eb;
+  background: #1b2340;
   font-synthesis: none;
   font-weight: 400;
-  --paper: #f6f4ee;
-  --muted: #8c8b83;
-  --orange: #cb643e;
-  --line: #deddd4;
+  --paper: #1b2340;
+  --muted: #c4c2b8;
+  --orange: #d4a459;
+  --line: #ffffff30;
 }
 * {
   box-sizing: border-box;
@@ -1040,7 +1040,7 @@ footer small {
   margin-top: 22px;
 }
 :root {
-  --ink: #302f2b;
+  --ink: #f5f3eb;
   color: var(--ink);
   background: var(--paper);
 }
