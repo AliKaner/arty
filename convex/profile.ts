@@ -72,6 +72,8 @@ export const save = mutation({
     for (const color of [profile.backgroundColor, profile.accentColor])
       if (!/^#[0-9a-fA-F]{6}$/.test(color))
         throw new ConvexError("Geçerli bir renk seç.");
+    if (profile.textColor && !/^#[0-9a-fA-F]{6}$/.test(profile.textColor))
+      throw new ConvexError("Geçerli bir metin rengi seç.");
     if (profile.links.length > 12)
       throw new ConvexError("En fazla 12 bağlantı ekleyebilirsin.");
     const links = profile.links.map((link) => {

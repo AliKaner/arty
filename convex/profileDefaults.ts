@@ -13,4 +13,5 @@ export const profileDefaults = {
   links: [] as { label: string; url: string }[],
   backgroundColor: "#f6f4ee",
   accentColor: "#cb643e",
+  textColor: "",
 };

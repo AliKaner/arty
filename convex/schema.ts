@@ -31,6 +31,7 @@ export const profileFields = {
   links: v.array(v.object({ label: v.string(), url: v.string() })),
   backgroundColor: v.string(),
   accentColor: v.string(),
+  textColor: v.optional(v.string()),
   avatarId: v.optional(v.id("_storage")),
 };
 export const journalImage = v.object({

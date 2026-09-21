@@ -93,6 +93,7 @@ export function useGallery() {
           "links",
           "backgroundColor",
           "accentColor",
+          "textColor",
           "heroLine1",
           "heroLine2",
           "heroIntro",

@@ -1270,6 +1270,11 @@ nav button.active {
   color: var(--muted);
   font-family: monospace;
 }
+.reset-text-color {
+  font-size: 10px;
+  color: var(--orange);
+  padding: 6px 0 0;
+}
 .color-presets {
   display: flex;
   gap: 12px;

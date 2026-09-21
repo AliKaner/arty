@@ -10,18 +10,27 @@ import {
   Camera,
   InkMark,
 } from "./icons";
+function isDarkBackground(hex) {
+  const clean = hex.slice(1);
+  const rgb = [0, 2, 4]
+    .map((i) => parseInt(clean.slice(i, i + 2), 16) / 255)
+    .map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722 < 0.3;
+}
+function autoTextColor(backgroundColor) {
+  return isDarkBackground(backgroundColor) ? "#f5f3eb" : "#302f2b";
+}
 export function useProfileTheme(profile) {
   useEffect(() => {
     if (!profile) return;
     const root = document.documentElement;
-    const hex = profile.backgroundColor.slice(1);
-    const rgb = [0, 2, 4]
-      .map((i) => parseInt(hex.slice(i, i + 2), 16) / 255)
-      .map((c) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
-    const dark = rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722 < 0.3;
+    const dark = isDarkBackground(profile.backgroundColor);
     root.style.setProperty("--paper", profile.backgroundColor);
     root.style.setProperty("--orange", profile.accentColor);
-    root.style.setProperty("--ink", dark ? "#f5f3eb" : "#302f2b");
+    root.style.setProperty(
+      "--ink",
+      profile.textColor || autoTextColor(profile.backgroundColor),
+    );
     root.style.setProperty("--muted", dark ? "#c4c2b8" : "#85857b");
     root.style.setProperty("--line", dark ? "#ffffff30" : "#00000020");
     root.dataset.theme = dark ? "dark" : "light";
@@ -422,6 +431,27 @@ export function ProfileEditor({ profile, onSave, onClose }) {
               <span>{value.accentColor}</span>
             </div>
           </label>
+          <label>
+            Metin rengi
+            <div>
+              <input
+                type="color"
+                aria-label="Metin rengi"
+                value={value.textColor || autoTextColor(value.backgroundColor)}
+                onChange={(e) => update("textColor", e.target.value)}
+              />
+              <span>{value.textColor || "Otomatik"}</span>
+            </div>
+            {value.textColor && (
+              <button
+                className="reset-text-color"
+                type="button"
+                onClick={() => update("textColor", "")}
+              >
+                Otomatik rengi kullan
+              </button>
+            )}
+          </label>
         </div>
         <div className="color-presets">
           {[
@@ -438,6 +468,7 @@ export function ProfileEditor({ profile, onSave, onClose }) {
                   ...v,
                   backgroundColor: bg,
                   accentColor: accent,
+                  textColor: "",
                 }))
               }
             >
