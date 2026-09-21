@@ -10,6 +10,8 @@ Türkçe sanatçı galerisi. React + Vite arayüzü, Convex veritabanı ve dosya
 
 `.env.local` geliştirme ortamını seçer; `.env.production` üretim derlemesini production backend'e bağlar. Dev/prod verileri ayrıdır. Örnek eserler ve günlük kayıtları yalnızca dev ortamına eklendi.
 
+`VITE_SITE_URL`, `og:url`/`og:image`/`twitter:image` etiketleri için mutlak adres sağlar; yayına almadan önce `.env.production` içindeki placeholder'ı (`https://example.com`) gerçek alan adınla değiştir.
+
 ```sh
 npm install
 npm run dev:all
