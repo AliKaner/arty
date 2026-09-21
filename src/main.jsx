@@ -19,7 +19,12 @@ import {
 import "./style.css";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { useGallery, Login, LocalImport } from "./backend";
-import { ArtistInfo, ProfileEditor, useProfileTheme } from "./Profile";
+import {
+  ArtistInfo,
+  ProfileEditor,
+  useProfileTheme,
+  BrandMark,
+} from "./Profile";
 import { JournalSection, JournalReader, JournalStudio } from "./Journal";
 function App() {
   const {
@@ -97,7 +102,7 @@ function App() {
       <header>
         <a className="brand" href="#" onClick={() => setPage("gallery")}>
           {profile?.name || "atelier"}
-          <InkMark size={33} />
+          <BrandMark logo={profile?.logo} size={33} />
         </a>
         <nav>
           <button
@@ -430,7 +435,7 @@ function App() {
       <footer>
         <a className="brand" href="#" onClick={() => setPage("gallery")}>
           {profile?.name || "atelier"}
-          <InkMark size={33} />
+          <BrandMark logo={profile?.logo} size={33} />
         </a>
         <span>Biraz merak, bolca his ile üretiyorum.</span>
         <small>

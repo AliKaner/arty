@@ -34,7 +34,7 @@ Galeri okumaları herkese açıktır. Ekleme, düzenleme, silme ve yükleme URL'
 
 ## Profil ve görünüm
 
-Stüdyodaki **Bilgi & görünüm** bölümünden isim, kısa unvan, hakkında yazısı, konum, e-posta, telefon, profil fotoğrafı ve 12 adede kadar bağlantı düzenlenir. Ana başlığın iki satırı, üst etiketi ve giriş yazısı da değiştirilebilir. Arka plan ve vurgu rengi seçilebilir; açık/koyu arka plana göre metin rengi uyarlanır. Fotoğraf 800px WebP olarak saklanır; değiştirilen veya kaldırılan fotoğraf temizlenir. Tüm bilgiler ziyaretçilere açıktır.
+Stüdyodaki **Bilgi & görünüm** bölümünden isim, kısa unvan, hakkında yazısı, konum, e-posta, telefon, profil fotoğrafı, marka logosu ve 12 adede kadar bağlantı düzenlenir. Ana başlığın iki satırı, üst etiketi ve giriş yazısı da değiştirilebilir. Arka plan, vurgu ve metin rengi renk seçiciyle veya doğrudan hex kodu yazılarak ayarlanır; metin rengi boş bırakılırsa açık/koyu arka plana göre otomatik uyarlanır. Değişiklikler kaydedilmeden önce küçük bir site önizlemesinde görülür. Marka logosu yüklenirse başlıktaki ve altbilgideki çizgi imzasının yerini alır; SVG, PNG, JPG veya WebP olabilir, en fazla 5 MB. Fotoğraf ve logo sırasıyla 800px WebP ve orijinal formatında saklanır; değiştirilen veya kaldırılan dosyalar temizlenir. Tüm bilgiler ziyaretçilere açıktır.
 
 Yıldızlar ve hazır ikon paketi kaldırıldı. `src/icons.jsx` portfolyoya özel açık konturlu SVG çizgiler içerir. Atmosfer efektleri ve müzik kaldırıldı; eser etiketleri ve filtreleme devam eder.
 

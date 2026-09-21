@@ -17,11 +17,14 @@ export const get = query({
         updatedAt: 0,
         avatar: null,
         avatarId: undefined,
+        logo: null,
+        logoId: undefined,
       };
     return {
       ...profileDefaults,
       ...row,
       avatar: row.avatarId ? await ctx.storage.getUrl(row.avatarId) : null,
+      logo: row.logoId ? await ctx.storage.getUrl(row.logoId) : null,
     };
   },
 });
@@ -113,6 +116,22 @@ export const save = mutation({
       if (owner && owner._id !== previous?._id)
         throw new ConvexError("Bu dosya başka bir kayda ait.");
     }
+    if (profile.logoId) {
+      const file = await ctx.db.system.get(profile.logoId);
+      if (
+        !file ||
+        file.size > 5 * 1024 * 1024 ||
+        !["image/svg+xml", "image/png", "image/jpeg", "image/webp"].includes(
+          file.contentType || "",
+        )
+      )
+        throw new ConvexError(
+          "Logo SVG, PNG, JPG veya WebP ve en fazla 5 MB olmalı.",
+        );
+      const owner = await referenced(ctx, profile.logoId);
+      if (owner && owner._id !== previous?._id)
+        throw new ConvexError("Bu dosya başka bir kayda ait.");
+    }
     const value = {
       ...profile,
       name,
@@ -125,5 +144,6 @@ export const save = mutation({
     if (previous) await ctx.db.replace(previous._id, value);
     else await ctx.db.insert("profile", value);
     if (previous?.avatarId) await discard(ctx, [previous.avatarId]);
+    if (previous?.logoId) await discard(ctx, [previous.logoId]);
   },
 });

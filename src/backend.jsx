@@ -103,6 +103,9 @@ export function useGallery() {
       if (value.avatar?.startsWith("data:"))
         profile.avatarId = await upload(value.avatar, uploaded);
       else if (value.avatarId) profile.avatarId = value.avatarId;
+      if (value.logo?.startsWith("data:"))
+        profile.logoId = await upload(value.logo, uploaded);
+      else if (value.logoId) profile.logoId = value.logoId;
       await updateProfile({
         key,
         profile,

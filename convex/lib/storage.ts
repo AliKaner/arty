@@ -18,6 +18,10 @@ export async function referenced(ctx: MutationCtx, id: Id<"_storage">) {
     (await ctx.db
       .query("profile")
       .withIndex("by_avatar", (q) => q.eq("avatarId", id))
+      .first()) ||
+    (await ctx.db
+      .query("profile")
+      .withIndex("by_logo", (q) => q.eq("logoId", id))
       .first())
   );
 }

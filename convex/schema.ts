@@ -33,6 +33,7 @@ export const profileFields = {
   accentColor: v.string(),
   textColor: v.optional(v.string()),
   avatarId: v.optional(v.id("_storage")),
+  logoId: v.optional(v.id("_storage")),
 };
 export const journalImage = v.object({
   storageId: v.optional(v.id("_storage")),
@@ -64,7 +65,8 @@ export default defineSchema({
     updatedAt: v.number(),
   })
     .index("by_singleton", ["singleton"])
-    .index("by_avatar", ["avatarId"]),
+    .index("by_avatar", ["avatarId"])
+    .index("by_logo", ["logoId"]),
   works: defineTable({
     ...workFields,
     updatedAt: v.number(),

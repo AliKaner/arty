@@ -20,6 +20,41 @@ function isDarkBackground(hex) {
 function autoTextColor(backgroundColor) {
   return isDarkBackground(backgroundColor) ? "#f5f3eb" : "#302f2b";
 }
+function HexInput({ label, value, onChange }) {
+  const [text, setText] = useState(value);
+  useEffect(() => setText(value), [value]);
+  return (
+    <input
+      className="hex-input"
+      aria-label={`${label} hex kodu`}
+      value={text}
+      maxLength={7}
+      spellCheck={false}
+      autoCapitalize="off"
+      autoCorrect="off"
+      onChange={(e) => {
+        let raw = e.target.value.trim();
+        if (raw && raw[0] !== "#") raw = `#${raw}`;
+        setText(raw);
+        if (/^#[0-9a-fA-F]{6}$/.test(raw)) onChange(raw);
+      }}
+    />
+  );
+}
+export function BrandMark({ logo, size = 33 }) {
+  if (logo)
+    return (
+      <img
+        className="brand-mark"
+        src={logo}
+        alt=""
+        aria-hidden="true"
+        width={size}
+        height={size}
+      />
+    );
+  return <InkMark size={size} />;
+}
 export function useProfileTheme(profile) {
   useEffect(() => {
     if (!profile) return;
@@ -153,6 +188,34 @@ export function ProfileEditor({ profile, onSave, onClose }) {
       update("avatar", canvas.toDataURL("image/webp", 0.9));
     } catch {
       setError("Fotoğraf okunamadı. Başka bir dosya dene.");
+    } finally {
+      setBusy(false);
+    }
+  }
+  async function logoFile(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (
+      !["image/svg+xml", "image/png", "image/jpeg", "image/webp"].includes(
+        file.type,
+      ) ||
+      file.size > 5 * 1024 * 1024
+    ) {
+      setError("SVG, PNG, JPG veya WebP seç; en fazla 5 MB.");
+      return;
+    }
+    setBusy(true);
+    setError("");
+    try {
+      const data = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      update("logo", data);
+    } catch {
+      setError("Logo okunamadı. Başka bir dosya dene.");
     } finally {
       setBusy(false);
     }
@@ -404,6 +467,38 @@ export function ProfileEditor({ profile, onSave, onClose }) {
           <Plus size={14} /> Bağlantı ekle
         </button>
         <div className="settings-section-heading">
+          <h3>Marka logosu</h3>
+        </div>
+        <div className="avatar-settings logo-settings">
+          <span className="logo-preview">
+            <BrandMark logo={value.logo} size={30} />
+          </span>
+          <div>
+            <label className="avatar-upload">
+              Logo seç
+              <input
+                aria-label="Logo"
+                type="file"
+                accept="image/svg+xml,image/png,image/jpeg,image/webp"
+                disabled={busy}
+                onChange={logoFile}
+              />
+            </label>
+            <small>SVG, PNG, JPG, WebP · En fazla 5 MB</small>
+            {value.logo && (
+              <button
+                className="remove-avatar"
+                type="button"
+                onClick={() =>
+                  setValue((v) => ({ ...v, logo: null, logoId: undefined }))
+                }
+              >
+                Logoyu kaldır
+              </button>
+            )}
+          </div>
+        </div>
+        <div className="settings-section-heading">
           <h3>Galerinin renkleri</h3>
         </div>
         <div className="color-fields">
@@ -416,7 +511,11 @@ export function ProfileEditor({ profile, onSave, onClose }) {
                 value={value.backgroundColor}
                 onChange={(e) => update("backgroundColor", e.target.value)}
               />
-              <span>{value.backgroundColor}</span>
+              <HexInput
+                label="Arka plan rengi"
+                value={value.backgroundColor}
+                onChange={(hex) => update("backgroundColor", hex)}
+              />
             </div>
           </label>
           <label>
@@ -428,7 +527,11 @@ export function ProfileEditor({ profile, onSave, onClose }) {
                 value={value.accentColor}
                 onChange={(e) => update("accentColor", e.target.value)}
               />
-              <span>{value.accentColor}</span>
+              <HexInput
+                label="Vurgu rengi"
+                value={value.accentColor}
+                onChange={(hex) => update("accentColor", hex)}
+              />
             </div>
           </label>
           <label>
@@ -440,17 +543,12 @@ export function ProfileEditor({ profile, onSave, onClose }) {
                 value={value.textColor || autoTextColor(value.backgroundColor)}
                 onChange={(e) => update("textColor", e.target.value)}
               />
-              <span>{value.textColor || "Otomatik"}</span>
+              <HexInput
+                label="Metin rengi"
+                value={value.textColor || autoTextColor(value.backgroundColor)}
+                onChange={(hex) => update("textColor", hex)}
+              />
             </div>
-            {value.textColor && (
-              <button
-                className="reset-text-color"
-                type="button"
-                onClick={() => update("textColor", "")}
-              >
-                Otomatik rengi kullan
-              </button>
-            )}
           </label>
         </div>
         <div className="color-presets">
@@ -482,13 +580,26 @@ export function ProfileEditor({ profile, onSave, onClose }) {
           style={{
             background: value.backgroundColor,
             borderColor: value.accentColor,
+            color: value.textColor || autoTextColor(value.backgroundColor),
           }}
         >
-          <span style={{ color: value.accentColor }}>
-            <InkMark size={25} /> {value.name || "Atelier"}
+          <span className="theme-preview-brand" style={{ color: value.accentColor }}>
+            <BrandMark logo={value.logo} size={20} /> {value.name || "Atelier"}
           </span>
-          <small style={{ color: value.accentColor }}>Renk önizlemesi</small>
+          <strong className="theme-preview-heading">
+            Biraz düş, biraz dünya.
+          </strong>
+          <p className="theme-preview-text">
+            İçimden geçenleri renk, çizgi ve ışıkla anlatıyorum.
+          </p>
+          <span
+            className="theme-preview-button"
+            style={{ color: value.accentColor }}
+          >
+            <Plus size={12} /> Yeni eser ekle
+          </span>
         </div>
+        <p className="theme-preview-caption">Sitenin küçük önizlemesi</p>
         {error && (
           <p className="error" role="alert">
             {error}

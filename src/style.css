@@ -507,6 +507,7 @@ footer small {
 }
 .empty svg {
   margin: auto;
+  color: var(--orange);
 }
 .empty button {
   color: var(--orange);
@@ -1207,6 +1208,17 @@ nav button.active {
   color: var(--orange);
   text-decoration: underline;
 }
+.logo-preview {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--orange) 8%, var(--paper));
+  color: var(--orange);
+  flex-shrink: 0;
+}
 .settings-section-heading {
   display: flex;
   align-items: center;
@@ -1265,15 +1277,11 @@ nav button.active {
   border: 1px solid var(--line);
   cursor: pointer;
 }
-.color-fields span {
-  font-size: 11px;
-  color: var(--muted);
+.editor input.hex-input {
+  width: 84px;
+  padding: 9px 10px;
   font-family: monospace;
-}
-.reset-text-color {
-  font-size: 10px;
-  color: var(--orange);
-  padding: 6px 0 0;
+  text-transform: lowercase;
 }
 .color-presets {
   display: flex;
@@ -1295,19 +1303,44 @@ nav button.active {
   border: 1px solid;
 }
 .theme-preview {
-  padding: 18px;
+  padding: 22px 24px;
   border: 1px solid;
-  border-radius: 5px;
+  border-radius: 8px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
+}
+.theme-preview-brand {
+  display: flex;
   align-items: center;
-}
-.theme-preview > span {
+  gap: 8px;
   font-family: "Playfair Display", serif;
-  font-size: 23px;
+  font-size: 19px;
 }
-.theme-preview small {
+.theme-preview-heading {
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: -0.5px;
+}
+.theme-preview-text {
+  font-size: 11px;
+  line-height: 1.7;
+  opacity: 0.7;
+  margin: 0;
+}
+.theme-preview-button {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 10px;
+  margin-top: 4px;
+}
+.theme-preview-caption {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 8px;
 }
 [data-theme="dark"] .editor input:not([type="file"]),
 [data-theme="dark"] .editor textarea,
@@ -1393,14 +1426,15 @@ nav button.active {
   .about-artist .artist-info {
     margin-top: 25px;
   }
-  .theme-preview > span {
-    font-size: 20px;
+  .theme-preview-brand {
+    font-size: 16px;
+  }
+  .theme-preview-heading {
+    font-size: 19px;
   }
   .theme-preview {
-    gap: 10px;
-  }
-  .theme-preview small {
-    font-size: 8px;
+    gap: 8px;
+    padding: 18px 20px;
   }
 }
 .brand {
@@ -1411,6 +1445,10 @@ nav button.active {
 .brand > svg {
   color: var(--orange);
   flex-shrink: 0;
+}
+.brand > img.brand-mark {
+  flex-shrink: 0;
+  object-fit: contain;
 }
 .hero h1 {
   max-width: calc(100% - 130px);
@@ -1665,6 +1703,9 @@ nav button.active {
   color: var(--muted);
   font-size: 12px;
 }
+.journal-empty > svg {
+  color: var(--orange);
+}
 .journal-detail {
   position: relative;
   background: var(--paper);
@@ -1749,6 +1790,9 @@ nav button.active {
   color: var(--muted);
   border-top: 1px solid var(--line);
   padding-top: 20px;
+}
+.journal-detail-end > svg {
+  color: var(--orange);
 }
 .lightbox-backdrop {
   background: #151a17f0;
