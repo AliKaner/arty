@@ -1,0 +1,45 @@
+{
+  "name": "arty",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "dev:backend": "convex dev",
+    "dev:all": "convex dev --start \"vite --host 0.0.0.0\"",
+    "deploy:backend": "convex deploy",
+    "setup:admin": "node scripts/setup-admin.mjs",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "typecheck": "tsc --project convex/tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AliKaner/arty.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/AliKaner/arty/issues"
+  },
+  "homepage": "https://github.com/AliKaner/arty#readme",
+  "dependencies": {
+    "convex": "^1.46.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@edge-runtime/vm": "^5.0.0",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.2",
+    "convex-test": "^0.0.59",
+    "prettier": "^3.9.8",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0",
+    "vitest": "^4.1.11"
+  }
+}
